@@ -126,6 +126,7 @@
                 debugger
                 this.$refs.login.validate(valid => {
                     if (valid) {
+                        debugger
                         API.user_Login(user).then(res => {
                             debugger
                             if (res.body.userName == null || res.body.telePhone == null) {

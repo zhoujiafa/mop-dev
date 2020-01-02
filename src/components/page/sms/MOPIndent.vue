@@ -15,16 +15,17 @@
             </span>-->
 
             <el-button type="primary" icon="el-icon-search" @click="handleSearch">搜索</el-button>
-            <!--<el-button type="warning" icon="el-icon-delete" @click="handleSearch">重置</el-button>-->
-            <!--<el-button type="success" icon="el-icon-plus" @click="addMOPIndent">新增</el-button>-->
+            <el-button type="warning" icon="el-icon-delete" @click="handleSearch">重置</el-button>
+            <el-button type="success" icon="el-icon-plus" @click="addMOPIndent">新增订货单</el-button>
             <!--<el-button type="info" icon="el-icon-download" @click="delAllSelection">导出</el-button>-->
         </div>
         <div>
             <el-table
-                    :data="indentData"
+                    :data="MOPIndentPage"
                     style="width: 100%;margin-bottom: 20px;"
-                    row-key="id"
+                    row-key="docNum"
                     border
+                    stripe
                     :row-key="getRowKeys"
                     :expand-row-keys="expands"
                     @current-change="toggleRowExpansion"
@@ -35,49 +36,46 @@
                             <el-form-item label="门店名称:">
                                 <span>{{props.row.companyName}}</span>
                             </el-form-item>
-                            <el-form-item label="订单号码:">
-                                <span>{{ props.row.docNum}}</span>
-                            </el-form-item>
                             <el-form-item label="门店编码:">
                                 <span>{{props.row.companyCode}}</span>
                             </el-form-item>
-                            <el-form-item label="订单状态:">
-                                <span>{{props.row.orderStatus}}</span>
+                            <el-form-item label="原订单号码:">
+                                <span>{{ props.row.orderNo}}</span>
                             </el-form-item>
+                            <el-form-item label="新订单号码:">
+                                <span>{{ props.row.docNum}}</span>
+                            </el-form-item>
+                            <el-form-item label="订单类型:">
+                                <span>{{props.row.orderTypeName}}</span>
+                            </el-form-item>
+                            <el-form-item label="订单状态:">
+                                <span>{{props.row.orderStatusName}}</span>
+                            </el-form-item>
+                            <el-form-item label="付款状态:">
+                                <span>{{props.row.payStatusName}}</span>
+                            </el-form-item>
+
                             <el-form-item label="创建日期:">
                                 <span>{{ props.row.createDate}}</span>
                             </el-form-item>
                             <el-form-item label="创建人:">
                                 <span>{{ props.row.createName}}</span>
                             </el-form-item>
-                            <el-form-item label="下载标识:">
-                                <span>{{ props.row.downLoadMark}}</span>
-                            </el-form-item>
-                            <el-form-item label="上传标识:">
-                                <span>{{ props.row.upLoadMark }}</span>
-                            </el-form-item>
-                            <el-form-item label="数量总计:">
-                                <span>{{ props.row.docQtyTotal }}</span>
-                            </el-form-item>
-                            <el-form-item label="金额总计:">
-                                <span>{{ props.row.docTotal }}</span>
-                            </el-form-item>
-                            <el-form-item label="品牌编号:">
-                                <span>{{ props.row.cardCode }}</span>
-                            </el-form-item>
-                            <el-form-item label="品牌名称:">
-                                <span>{{ props.row.cardName }}</span>
-                            </el-form-item>
-                            <el-form-item label="部门编号:">
-                                <span>{{ props.row.department }}</span>
-                            </el-form-item>
-                            <el-form-item label="销售编号:">
-                                <span>{{ props.row.saleCode }}</span>
-                            </el-form-item>
                             <el-form-item label="备注:">
                                 <span>{{ props.row.remark }}</span>
                             </el-form-item>
                         </el-form>
+                        <el-button-group style="position: relative;left: 95%">
+                            <el-tooltip content="编辑" placement="top">
+                                <el-button type="primary" icon="el-icon-edit" circle></el-button>
+                            </el-tooltip>
+                            <el-tooltip content="详情" placement="top">
+                                <el-button type="primary" icon="el-icon-s-data" circle @click="MopIndentDtView(props.row.companyCode,props.row.docNum)"></el-button>
+                            </el-tooltip>
+                            <el-tooltip content="删除" placement="top">
+                                <el-button type="primary" icon="el-icon-delete" circle></el-button>
+                            </el-tooltip>
+                        </el-button-group>
                     </template>
                 </el-table-column>
                 <el-table-column
@@ -85,45 +83,50 @@
                         label="门店名称"
                         sortable
                         align="center"
-                        width="230">
+                        width="209%">
                 </el-table-column>
                 <el-table-column
                         prop="docNum"
-                        label="订货单号"
-                        sortable
-                        align="center">
+                        label="新订单号"
+                        align="center"
+                        width="120%">
                 </el-table-column>
                 <el-table-column
-                        prop="cardName"
-                        label="代理商"
-                        align="center">
+                        prop="orderNo"
+                        label="原订单号"
+                        align="center"
+                        width="180%">
+                </el-table-column>
+                <el-table-column
+                        prop="orderTypeName"
+                        label="订单类型"
+                        align="center"
+                        width="120%">
+                </el-table-column>
+                <el-table-column
+                        prop="payStatusName"
+                        label="付款状态"
+                        align="center"
+                        width="120%">
                 </el-table-column>
                 <el-table-column
                         prop="orderStatusName"
                         label="订单状态"
-                        align="center">
-                </el-table-column>
-                <el-table-column
-                        prop="orderStatus"
-                        label="订单状态"
                         align="center"
-                        v-if="orderStatus">
+                        width="120%">
                 </el-table-column>
                 <el-table-column
                         prop="createDate"
                         label="创建日期"
-                        align="center">
+                        sortable
+                        align="center"
+                        width="150%">
                 </el-table-column>
                 <el-table-column
                         prop="createName"
+                        label="创建人"
                         align="center"
-                        label="创建人">
-                </el-table-column>
-
-                <el-table-column
-                        prop="deliveryDate"
-                        label="到货日期"
-                        sortable>
+                        width="120%">
                 </el-table-column>
             </el-table>
             <div class="pagination" style="width: 100%;text-align: left;margin-top: 10px;">
@@ -145,8 +148,8 @@
             <el-form label-width="100px" ref="indentValidateForm" :model="indentValidateForm">
                 <el-form-item label="门店信息:" prop="companyCode" :rules="[
                     { required: true, message: '门店信息不能为空'}]">
-                    <el-select v-model="saveParam.orderNo" v-model.trim="indentValidateForm.companyCode"
-                               placeholder="请选择公司">
+                    <el-select v-model="saveParam.orderNo" filterable v-model.trim="indentValidateForm.companyCode"
+                               placeholder="请选择门店">
                         <el-option
                                 autocomplete="off" type="companyCode"
                                 v-for="item in companyList"
@@ -159,7 +162,7 @@
                 <el-form-item label="订货单号:" prop="orderNo" :rules="[
                     { required: true, message: '订货单号不能为空'},
                     { message: '订货单号不能存在特殊字符'}]">
-                    <el-input v-model="saveParam.orderNo" clearable v-model.trim="indentValidateForm.orderNo"
+                    <el-input v-model="saveParam.orderNo" clearable v-model.trim="indentValidateForm.orderNo" placeholder="请输入单号"
                               autocomplete="off" type="orderNo"></el-input>
                 </el-form-item>
             </el-form>
@@ -176,39 +179,39 @@
                 <div>
                     <el-form :inline="true" class="demo-form-inline">
                         <el-form-item label="公司编码:" style="width: 30%;position: relative;left: 10%">
-                            <el-input v-model="this.MOPIndentData.companyCode"  placeholder="暂无数据" style="width: 100%"
+                            <el-input v-model="this.MOPIndentData.companyCode" placeholder="暂无数据" style="width: 100%"
                                       disabled="false"></el-input>
                         </el-form-item>
                         <el-form-item label="公司名称:" style="width: 30%;position: relative;left: 5%">
-                            <el-input v-model="this.MOPIndentData.companyName"  placeholder="暂无数据" style="width: 110%"
+                            <el-input v-model="this.MOPIndentData.companyName" placeholder="暂无数据" style="width: 110%"
                                       disabled="false"></el-input>
                         </el-form-item>
                         <el-form-item label="订货单号:" style="width: 30%;position: relative;left: 0%">
-                            <el-input v-model="this.MOPIndentData.orderNo"  placeholder="暂无数据" style="width: 100%"
+                            <el-input v-model="this.MOPIndentData.orderNo" placeholder="暂无数据" style="width: 100%"
                                       disabled="false"></el-input>
                         </el-form-item>
                         <el-form-item label="单据编码:" style="width: 30%;position: relative;left: 10%">
-                            <el-input v-model="this.MOPIndentData.orderType"  placeholder="暂无数据" style="width: 100%"
+                            <el-input v-model="this.MOPIndentData.orderType" placeholder="暂无数据" style="width: 100%"
                                       disabled="false"></el-input>
                         </el-form-item>
                         <el-form-item label="单据名称:" style="width: 30%;position: relative;left: 5%">
-                            <el-input v-model="this.MOPIndentData.orderTypeName"  placeholder="暂无数据" style="width: 100%"
+                            <el-input v-model="this.MOPIndentData.orderTypeName" placeholder="暂无数据" style="width: 100%"
                                       disabled="false"></el-input>
                         </el-form-item>
                         <el-form-item label="付款状态:" style="width: 30%;position: relative;left: 0%">
-                            <el-input v-model="this.MOPIndentData.payStatusName"  placeholder="暂无数据" style="width: 100%"
+                            <el-input v-model="this.MOPIndentData.payStatusName" placeholder="暂无数据" style="width: 100%"
                                       disabled="false"></el-input>
                         </el-form-item>
                         <el-form-item label="创建日期:" style="width: 30%;position: relative;left: 10%">
-                            <el-input v-model="this.MOPIndentData.createDate"  placeholder="暂无数据" style="width: 100%"
+                            <el-input v-model="this.MOPIndentData.createDate" placeholder="暂无数据" style="width: 100%"
                                       disabled="false"></el-input>
                         </el-form-item>
                         <el-form-item label="单创建人:" style="width: 30%;position: relative;left: 5%">
-                            <el-input v-model="this.MOPIndentData.createName"  placeholder="暂无数据" style="width: 100%"
+                            <el-input v-model="this.MOPIndentData.createName" placeholder="暂无数据" style="width: 100%"
                                       disabled="false"></el-input>
                         </el-form-item>
                         <el-form-item label="到货日期:" style="width: 30%;position: relative;left: 0%">
-                            <el-input v-model="this.MOPIndentData.deliveryDate"  placeholder="暂无数据" style="width: 100%"
+                            <el-input v-model="this.MOPIndentData.deliveryDate" placeholder="暂无数据" style="width: 100%"
                                       disabled="false"></el-input>
                         </el-form-item>
                     </el-form>
@@ -222,6 +225,7 @@
                         header-cell-class-name="table-header"
                         class="table">
                     <el-table-column
+                            width="320"
                             align="center"
                             label="商品名称"
                             prop="itemName">
@@ -236,17 +240,14 @@
                             label="数量"
                             prop="itemQuantity">
                     </el-table-column>
-                    <!--<el-table-column
-                            align="center"
-                            label="商品当前单位"
-                            prop="itemUnit">
-                    </el-table-column>-->
                     <el-table-column
+                            width="200"
                             align="center"
                             label="规格名称"
                             prop="specName">
                     </el-table-column>
                     <el-table-column
+                            width="150"
                             align="center"
                             label="SKU编码"
                             prop="skuBarcode">
@@ -291,7 +292,7 @@
 
                 <span slot="footer" class="dialog-footer">
                 <el-button @click=" previewVisible = false">取 消</el-button>
-                <!--<el-button type="primary" @click="saveMOPIndent()">确定保存</el-button>-->
+                <el-button type="primary" @click="saveMOPIndent()">确定保存</el-button>
             </span>
             </div>
         </el-dialog>
@@ -307,8 +308,7 @@
         inject: ['reload'],
         data() {
             return {
-                indentData: [],
-                indentDtData: [],
+                MOPIndentPage: [],
                 MOPIndentData: {
                     companyCode: ''
                 },
@@ -344,48 +344,40 @@
                 },
                 expands: [],
                 getRowKeys(row) {
-                    return row.id;
+                    return row.docNum;
                 }
             };
         },
         created() {
-            this.getIndentData();
-            this.getindentDtData();
-            this.getMOPIndentData();
+            this.getMOPIndentPage();
             this.getMOPIndentDtData();
             this.getSelectCompanyListData();
         },
 
 
         methods: {
-            getIndentData: function() {
+            getMOPIndentPage: function() {
                 debugger;
                 console.log(this.query);
-                API.page_Indent(this.page, this.size, this.query).then(res => {
-                    this.indentData = res.body.records;
+                API.page_MOPIndent(this.page, this.size, this.query).then(res => {
+                    this.MOPIndentPage = res.body.records;
                     this.pageTotal = res.body.total;
                 });
-            },
-            getindentDtData: function() {
-
-            },
-            getMOPIndentData: function() {
-
             },
             getMOPIndentDtData: function() {
 
             },
             handleSearch: function() {
-                this.getIndentData();
+                this.getMOPIndentPage();
             },
             handlePageChange: function(val) {
                 this.page = val;
 
-                this.getIndentData();
+                this.getMOPIndentPage();
             }, handleSizeChange(val) {
                 console.log(`每页 ${val} 条`);
                 this.size = val;
-                this.indentData();
+                this.MOPIndentPage();
             },
             addMOPIndent: function() {
                 this.addMOPIndentVisible = true;
@@ -401,13 +393,17 @@
                         API.downloadMOPIndent(this.saveParam).then(res => {
                             debugger;
                             this.MOPIndentData = res.body;
-                            if (res.body != null) {
+                            if (res.body.code != -1) {
                                 this.MOPIndentDtData = res.body.lines;
+                                this.previewVisible = true;
                             } else {
-                                this.MOPIndentDtData = null;
+                                debugger
+                                this.$message({
+                                    type: 'info',
+                                    message: res.body.message
+                                });
                             }
                         });
-                        this.previewVisible = true;
                     } else {
                         console.log('error submit!!');
                         return false;
@@ -425,7 +421,7 @@
                     this.companyList = res.body;
                 });
             },
-            /*saveMOPIndent() {
+            saveMOPIndent() {
                 let params = {
                     companyCode: '',
                     companyName: '',
@@ -458,16 +454,20 @@
                 params.lines = this.MOPIndentData.lines;
                 params.isRetransmit = false;
                 params.isCompulsorySubmission = false;
-                /!*查询订单下载表信息是否存在*!/
-                API.MOPIndent_Info(params).then(res => {
-                    if (res.body.orderNo != null) {
+                /*查询订单下载表信息是否存在*/
+                debugger;
+                API.getMOPIndentByOrder(params).then(res => {
+                    debugger;
+                    if (res.body.length > 0) {
+                        /*本地存在已下载订单信息*/
                         this.opens(params);
                     } else {
-                        API.moIndent_Save(params).then(res => {
+                        API.MOPIndent_Save(params).then(res => {
                             debugger;
-                            if (res.body != null) {
+                            if (res.body.body.resultInt == 0) {
+                                debugger
                                 this.$message({
-                                    message: '订单添加成功！',
+                                    message: res.body.body.resultString+"!",
                                     type: 'success'
                                 });
                             }
@@ -477,9 +477,17 @@
                         });
                     }
                 });
-            },*/
-            opens: function(params) {
+            },
+            MopIndentDtView(companyCode,docNum){
                 debugger
+                let MOPIndentParams={
+                    companyCode: companyCode,
+                    docNum: docNum
+                }
+                this.$router.push({path:'MopIndentDt',query:{MOPIndentParams:MOPIndentParams}});
+            },
+            opens: function(params) {
+                debugger;
                 this.$confirm('该订单已存在，是否重复提交？', '确认信息', {
                     distinguishCancelAndClose: true,
                     confirmButtonText: '确认保存',
@@ -487,50 +495,24 @@
                     type: 'warning'
                 }).then(() => {
                     params.isRetransmit = true;
-                    API.moIndent_Save(params).then(res => {
-                        debugger
-                        if (res.body.body.resultInt == 2) {
-                            debugger
+                    API.MOPIndent_Save(params).then(res => {
+                        debugger;
+                        if (res.body.body.resultInt == 2 || res.body.body.resultInt == 0) {
+                            debugger;
                             this.$message({
                                 type: 'success',
                                 message: res.body.body.resultString
                             });
-                            this.reload();
-                            this.addMOPIndentVisible = false;
-                            this.previewVisible = false;
-                        } else if (res.body.body.resultInt == 1) {
-                            this.$confirm(res.resultInt + ', 是否强制提交信息?', '提示', {
-                                confirmButtonText: '确定',
-                                cancelButtonText: '取消',
-                                type: 'warning'
-                            }).then(() => {
-                                params.isRetransmit = true;
-                                params.isCompulsorySubmission=true;
-                                API.moIndent_Save(params).then(res => {
-                                    if (res.resultInt == 2) {
-                                        this.$message({
-                                            type: 'success',
-                                            message: '提交成功!,' + res.resultString
-                                        });
-                                    }
-                                });
-                            }).catch(() => {
-                                this.$message({
-                                    type: 'info',
-                                    message: '已取消提交'
-                                });
-                            });
-                        }else if(res.body.body.resultInt == 0){
-                            debugger
-                            this.$message({
-                                type: 'success',
-                                message: res.body.body.resultString
-                            });
-                            this.reload();
-                            this.addMOPIndentVisible = false;
-                            this.previewVisible = false;
-                        }
 
+                        }else{
+                            this.$message({
+                                type: 'error',
+                                message: res.body.body.resultString
+                            });
+                        }
+                        this.reload();
+                        this.addMOPIndentVisible = false;
+                        this.previewVisible = false;
                     });
                 }).catch(action => {
                     this.$message({
@@ -542,9 +524,8 @@
                 });
             },
             toggleRowExpansion(row) {
-                debugger
                 this.expands = [];
-                this.expands.push(row.id);
+                this.expands.push(row.docNum);
             }
 
         }

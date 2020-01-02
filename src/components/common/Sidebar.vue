@@ -74,28 +74,37 @@ export default {
                 {
                     icon: 'el-icon-lx-calendar',
                     index: 'api',
-                    title: '接口管理',
+                    title: '订单管理',
                     subs: [
                         {
+                            index: 'NeedOrder',
+                            title: '本地要货单'
+                        },
+                        {
                             index: 'MOPNeedOrder',
-                            title: '要货单信息'
+                            title: 'MOP要货单'
                         },
                         {
                             index: 'Indent',
-                            title: '订货单信息'
+                            title: '本地订货单'
                         },
+                        {
+                            index: 'MOPIndent',
+                            title: 'MOP订货单'
+                        }/*,
                         {
                             index: 'SmsMchConfig',
                             title: '商户短信配置'
+
                         },
                         {
-                            index: 'SmsTemplate',
+                            index: 'SmsTemplateType',
                             title: '商户短信模板'
                         },
                         {
                             index: 'SmsSendRecord',
                             title: '短信发送记录'
-                        }
+                        }*/
                     ]
                 },
                 // {

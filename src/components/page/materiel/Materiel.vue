@@ -2,8 +2,8 @@
     <div>
         <div class="container">
             <div class="handle-box">
-                <el-input v-model="query.skuBarcode" placeholder="SKU编码" class="handle-input mr10"></el-input>
-                <el-input v-model="query.itemCode" placeholder="商品编码" class="handle-input mr10"></el-input>
+                <el-input v-model="query.skuBarcode" placeholder="SKU编码" class="handle-input mr10" style="width: 200px"></el-input>
+                <el-input v-model="query.itemCode" placeholder="商品编码" class="handle-input mr10" style="width: 200px"></el-input>
                 <el-button type="primary" icon="el-icon-search" @click="handleSearch">搜索</el-button>
                 <!--<el-button type="primary" icon="el-icon-circle-check" @click="saveData" class="handle-input mr10">保存
                 </el-button>-->
@@ -102,6 +102,7 @@
     import * as API from '../../../api/index';
 
     export default {
+        inject: ['reload'],
         name: 'brand',
         data() {
             return {
@@ -164,28 +165,29 @@
                 debugger
                 console.log('当前行id的值为：' + id);
                 console.log('下拉框选中的值为：' + barCode);
-                this.opens();
-                let params = {
-                    goodsDictID: 0,
-                    barCode: ''
-                };
-                params.goodsDictID = id;
-                params.barCode = barCode;
-                console.log(params);
-
-                API.goodsDict_update(params).then(res => {
-                });
-            },
-            opens() {
                 this.$confirm('此操作将进行更新, 是否继续?', '提示', {
                     confirmButtonText: '确定',
                     cancelButtonText: '取消',
                     type: 'warning',
                     center: true
                 }).then(() => {
-                    this.$message({
-                        type: 'success',
-                        message: '更新成功!'
+                    debugger
+                    let params = {
+                        goodsDictID: 0,
+                        barCode: ''
+                    };
+                    params.goodsDictID = id;
+                    params.barCode = barCode;
+                    console.log(params);
+                    debugger
+                    API.goodsDict_update(params).then(res => {
+                        if(res.body != null){
+                            this.$message({
+                                type: 'success',
+                                message: '更新成功!'
+                            });
+                            this.reload();
+                        }
                     });
                 }).catch(() => {
                     this.$message({
@@ -193,7 +195,9 @@
                         message: '已取消操作'
                     });
                 });
+
             }
+
         }
     };
 </script>

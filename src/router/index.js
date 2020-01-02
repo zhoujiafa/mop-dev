@@ -21,18 +21,23 @@ export default new Router({
                 },
                 {
                     path: '/company',
-                    component: () => import(/* webpackChunkName: "merchant" */ '../components/page/company/company.vue'),
+                    component: () => import(/* webpackChunkName: "merchant" */ '../components/page/company/Company.vue'),
                     meta: { title: '门店管理' }
                 },
                 {
                     path: '/materiel',
-                    component: () => import(/* webpackChunkName: "merchant" */ '../components/page/materiel/materiel.vue'),
+                    component: () => import(/* webpackChunkName: "merchant" */ '../components/page/materiel/Materiel.vue'),
                     meta: { title: '物料管理' }
+                },
+                {
+                    path: '/NeedOrder',
+                    component: () => import(/* webpackChunkName: "SmsProvider" */ '../components/page/sms/NeedOrder.vue'),
+                    meta: { title: '要货单信息' }
                 },
                 {
                     path: '/MOPNeedOrder',
                     component: () => import(/* webpackChunkName: "SmsProvider" */ '../components/page/sms/MOPNeedOrder.vue'),
-                    meta: { title: '要货单信息' }
+                    meta: { title: '要货单下载信息' }
                 },
                 {
                     path: '/Indent',
@@ -40,14 +45,19 @@ export default new Router({
                     meta: { title: '订货单信息' }
                 },
                 {
+                    path: '/MOPIndent',
+                    component: () => import(/* webpackChunkName: "SmsMchConfig" */ '../components/page/sms/MOPIndent.vue'),
+                    meta: { title: '订货单下载信息' }
+                },
+                {
                     path: '/SmsTemplateType',
                     component: () => import(/* webpackChunkName: "SmsTemplateType" */ '../components/page/sms/SmsTemplateType.vue'),
                     meta: { title: '短信模板类型' }
                 },
                 {
-                    path: '/SmsTemplate',
-                    component: () => import(/* webpackChunkName: "SmsTemplate" */ '../components/page/sms/SmsTemplate.vue'),
-                    meta: { title: '商户短信模板' }
+                    path: '/MOPIndentDt',
+                    component: () => import(/* webpackChunkName: "SmsTemplate" */ '../components/page/sms/MOPIndentDt.vue'),
+                    meta: { title: 'MOP订单详情' }
                 },
                 {
                     path: '/SmsSendRecord',

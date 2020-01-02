@@ -15,13 +15,13 @@
             </span>-->
 
             <el-button type="primary" icon="el-icon-search" @click="handleSearch">搜索</el-button>
-            <!--<el-button type="warning" icon="el-icon-delete" @click="handleSearch">重置</el-button>-->
-            <!--<el-button type="success" icon="el-icon-plus" @click="addMOPIndent">新增</el-button>-->
+            <!--<el-button type="warning" icon="el-icon-delete" @click="handleSearch">重置</el-button>
+            <el-button type="success" icon="el-icon-plus" @click="addMOPIndent">新增</el-button>-->
             <!--<el-button type="info" icon="el-icon-download" @click="delAllSelection">导出</el-button>-->
         </div>
         <div>
             <el-table
-                    :data="indentData"
+                    :data="NeedOrderData"
                     style="width: 100%;margin-bottom: 20px;"
                     row-key="id"
                     border
@@ -35,26 +35,26 @@
                             <el-form-item label="门店名称:">
                                 <span>{{props.row.companyName}}</span>
                             </el-form-item>
-                            <el-form-item label="订单号码:">
-                                <span>{{ props.row.docNum}}</span>
-                            </el-form-item>
                             <el-form-item label="门店编码:">
                                 <span>{{props.row.companyCode}}</span>
                             </el-form-item>
+                            <el-form-item label="订单号码:">
+                                <span>{{ props.row.docNum}}</span>
+                            </el-form-item>
+                            <el-form-item label="下载单号:">
+                                <span>{{ props.row.needNo}}</span>
+                            </el-form-item>
                             <el-form-item label="订单状态:">
-                                <span>{{props.row.orderStatus}}</span>
-                            </el-form-item>
-                            <el-form-item label="创建日期:">
-                                <span>{{ props.row.createDate}}</span>
-                            </el-form-item>
-                            <el-form-item label="创建人:">
-                                <span>{{ props.row.createName}}</span>
+                                <span>{{props.row.needStatus}}</span>
                             </el-form-item>
                             <el-form-item label="下载标识:">
                                 <span>{{ props.row.downLoadMark}}</span>
                             </el-form-item>
-                            <el-form-item label="上传标识:">
-                                <span>{{ props.row.upLoadMark }}</span>
+                            <el-form-item label="创建人:">
+                                <span>{{ props.row.createName}}</span>
+                            </el-form-item>
+                            <el-form-item label="创建日期:">
+                                <span>{{ props.row.createDate}}</span>
                             </el-form-item>
                             <el-form-item label="数量总计:">
                                 <span>{{ props.row.docQtyTotal }}</span>
@@ -74,6 +74,9 @@
                             <el-form-item label="销售编号:">
                                 <span>{{ props.row.saleCode }}</span>
                             </el-form-item>
+                            <el-form-item label="基代码:">
+                                <span>{{ props.row.baseDocNum }}</span>
+                            </el-form-item>
                             <el-form-item label="备注:">
                                 <span>{{ props.row.remark }}</span>
                             </el-form-item>
@@ -84,8 +87,7 @@
                         prop="companyName"
                         label="门店名称"
                         sortable
-                        align="center"
-                        width="230">
+                        align="center">
                 </el-table-column>
                 <el-table-column
                         prop="docNum"
@@ -94,17 +96,22 @@
                         align="center">
                 </el-table-column>
                 <el-table-column
+                        prop="needNo"
+                        label="下载单号"
+                        align="center">
+                </el-table-column>
+                <el-table-column
                         prop="cardName"
                         label="代理商"
                         align="center">
                 </el-table-column>
                 <el-table-column
-                        prop="orderStatusName"
+                        prop="needStatus"
                         label="订单状态"
                         align="center">
                 </el-table-column>
                 <el-table-column
-                        prop="orderStatus"
+                        prop="needStatus"
                         label="订单状态"
                         align="center"
                         v-if="orderStatus">
@@ -112,19 +119,17 @@
                 <el-table-column
                         prop="createDate"
                         label="创建日期"
-                        align="center">
+                        sortable
+                        align="center"
+                        width="200">
                 </el-table-column>
                 <el-table-column
                         prop="createName"
-                        align="center"
-                        label="创建人">
+                        label="创建人"
+                        align="center">
                 </el-table-column>
 
-                <el-table-column
-                        prop="deliveryDate"
-                        label="到货日期"
-                        sortable>
-                </el-table-column>
+
             </el-table>
             <div class="pagination" style="width: 100%;text-align: left;margin-top: 10px;">
                 <el-pagination
@@ -222,6 +227,7 @@
                         header-cell-class-name="table-header"
                         class="table">
                     <el-table-column
+                            width="320"
                             align="center"
                             label="商品名称"
                             prop="itemName">
@@ -242,11 +248,13 @@
                             prop="itemUnit">
                     </el-table-column>-->
                     <el-table-column
+                            width="200"
                             align="center"
                             label="规格名称"
                             prop="specName">
                     </el-table-column>
                     <el-table-column
+                            width="150"
                             align="center"
                             label="SKU编码"
                             prop="skuBarcode">
@@ -291,7 +299,7 @@
 
                 <span slot="footer" class="dialog-footer">
                 <el-button @click=" previewVisible = false">取 消</el-button>
-                <!--<el-button type="primary" @click="saveMOPIndent()">确定保存</el-button>-->
+                <el-button type="primary" @click="saveMOPIndent()">确定保存</el-button>
             </span>
             </div>
         </el-dialog>
@@ -307,7 +315,7 @@
         inject: ['reload'],
         data() {
             return {
-                indentData: [],
+                NeedOrderData: [],
                 indentDtData: [],
                 MOPIndentData: {
                     companyCode: ''
@@ -349,7 +357,7 @@
             };
         },
         created() {
-            this.getIndentData();
+            this.getNeedOrderData();
             this.getindentDtData();
             this.getMOPIndentData();
             this.getMOPIndentDtData();
@@ -358,11 +366,12 @@
 
 
         methods: {
-            getIndentData: function() {
+            getNeedOrderData: function() {
                 debugger;
                 console.log(this.query);
-                API.page_Indent(this.page, this.size, this.query).then(res => {
-                    this.indentData = res.body.records;
+                API.page_NeedOrder(this.page, this.size, this.query).then(res => {
+                    debugger
+                    this.NeedOrderData = res.body.records;
                     this.pageTotal = res.body.total;
                 });
             },
@@ -385,7 +394,7 @@
             }, handleSizeChange(val) {
                 console.log(`每页 ${val} 条`);
                 this.size = val;
-                this.indentData();
+                this.NeedOrderData();
             },
             addMOPIndent: function() {
                 this.addMOPIndentVisible = true;
@@ -425,7 +434,7 @@
                     this.companyList = res.body;
                 });
             },
-            /*saveMOPIndent() {
+            saveMOPIndent() {
                 let params = {
                     companyCode: '',
                     companyName: '',
@@ -458,7 +467,7 @@
                 params.lines = this.MOPIndentData.lines;
                 params.isRetransmit = false;
                 params.isCompulsorySubmission = false;
-                /!*查询订单下载表信息是否存在*!/
+                /*查询订单下载表信息是否存在*/
                 API.MOPIndent_Info(params).then(res => {
                     if (res.body.orderNo != null) {
                         this.opens(params);
@@ -477,7 +486,7 @@
                         });
                     }
                 });
-            },*/
+            },
             opens: function(params) {
                 debugger
                 this.$confirm('该订单已存在，是否重复提交？', '确认信息', {
@@ -542,7 +551,6 @@
                 });
             },
             toggleRowExpansion(row) {
-                debugger
                 this.expands = [];
                 this.expands.push(row.id);
             }
