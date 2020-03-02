@@ -15,7 +15,7 @@ export const fetchData = (query) => {
 const apiUrl = 'http://127.0.0.1:8082';
 //const apiUrl = 'http://192.168.0.133:8888';
 /*本地服务器*/
-/*const apiUrl = 'http://192.168.0.135:8080/MOP';*/
+/*const apiUrl = 'http://192.168.0.133:8080/MOP';*/
 
 
 /*—————————————————————注册———————————————————-———*/
