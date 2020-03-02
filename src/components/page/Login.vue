@@ -158,7 +158,7 @@
                                     type: 'success',
                                 });
                                 this.$refs[formName].resetFields();
-                                this.registerVisible=false;
+                       this.registerVisible=false;
                             }else{
                                 this.$message.error('该用户已被注册，请重新注册或直接登录');
                             }

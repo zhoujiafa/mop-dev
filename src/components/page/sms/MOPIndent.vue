@@ -26,6 +26,7 @@
                     row-key="docNum"
                     border
                     stripe
+                    class="table"
                     :row-key="getRowKeys"
                     :expand-row-keys="expands"
                     @current-change="toggleRowExpansion"
@@ -54,7 +55,6 @@
                             <el-form-item label="付款状态:">
                                 <span>{{props.row.payStatusName}}</span>
                             </el-form-item>
-
                             <el-form-item label="创建日期:">
                                 <span>{{ props.row.createDate}}</span>
                             </el-form-item>
@@ -83,50 +83,45 @@
                         label="门店名称"
                         sortable
                         align="center"
-                        width="209%">
+                        width="220%">
                 </el-table-column>
                 <el-table-column
                         prop="docNum"
-                        label="新订单号"
-                        align="center"
-                        width="120%">
+                        label="订货单号"
+                        align="center">
                 </el-table-column>
                 <el-table-column
                         prop="orderNo"
                         label="原订单号"
                         align="center"
-                        width="180%">
+                        v-if="orderNo">
                 </el-table-column>
                 <el-table-column
                         prop="orderTypeName"
                         label="订单类型"
                         align="center"
-                        width="120%">
+                        v-if="orderTypeName">
                 </el-table-column>
                 <el-table-column
                         prop="payStatusName"
                         label="付款状态"
-                        align="center"
-                        width="120%">
+                        align="center">
                 </el-table-column>
                 <el-table-column
                         prop="orderStatusName"
                         label="订单状态"
-                        align="center"
-                        width="120%">
+                        align="center">
                 </el-table-column>
                 <el-table-column
                         prop="createDate"
                         label="创建日期"
                         sortable
-                        align="center"
-                        width="150%">
+                        align="center">
                 </el-table-column>
                 <el-table-column
                         prop="createName"
                         label="创建人"
-                        align="center"
-                        width="120%">
+                        align="center">
                 </el-table-column>
             </el-table>
             <div class="pagination" style="width: 100%;text-align: left;margin-top: 10px;">
@@ -550,7 +545,7 @@
 
     .table {
         width: 100%;
-        font-size: 14px;
+        font-size: 13px;
     }
 
     .red {

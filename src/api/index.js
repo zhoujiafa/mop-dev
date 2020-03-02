@@ -9,9 +9,13 @@ export const fetchData = (query) => {
         // data: query
     });
 };
-const apiUrl = 'http://127.0.0.1:8888';
-/*const apiUrl = 'http://192.168.0.135:8888';*/
-/*const apiUrl = 'http://127.0.0.1:8082';*/
+/*远程服务器*/
+/*const apiUrl = 'http://14.17.96.21:8080/MOP';*/
+/*项目测试*/
+const apiUrl = 'http://127.0.0.1:8082';
+//const apiUrl = 'http://192.168.0.133:8888';
+/*本地服务器*/
+/*const apiUrl = 'http://192.168.0.135:8080/MOP';*/
 
 
 /*—————————————————————注册———————————————————-———*/
@@ -44,10 +48,10 @@ export const list_CompanyDict = (params) => {
     //将params对象数据拼装成key/value串
     let queryString = querystring.stringify(params);
     //请求服务端的页面查询接口
-    return http.requestQuickGet(apiUrl + '/companyDict/list/' + queryString);
+    return http.requestPost(apiUrl + '/companyDict/list', params);
 };
 /*门店管理 （更新）*/
-export const comp_update = (params) => {
+export const company_update = (params) => {
     //将params对象数据拼装成key/value串
     let queryString = querystring.stringify(params);
     //请求服务端的页面查询接口
@@ -58,7 +62,14 @@ export const company_save = (params) => {
     //将params对象数据拼装成key/value串
     let queryString = querystring.stringify(params);
     //请求服务端的页面查询接口
-    return http.requestPost(apiUrl + '/companyDict/update', params);
+    return http.requestPost(apiUrl + '/companyDict/save', params);
+};
+/*门店管理 （删除）*/
+export const company_delete = (params) => {
+    //将params对象数据拼装成key/value串
+    let queryString = querystring.stringify(params);
+    //请求服务端的页面查询接口
+    return http.requestPost(apiUrl + '/companyDict/delete', params);
 };
 
 
@@ -66,6 +77,10 @@ export const company_save = (params) => {
 /*门店管理更新 （代理商列表信息）*/
 export const asso_list = () => {
     return http.requestQuickGet(apiUrl + '/associateCompany/list');
+};
+/*门店管理详情 （代理商信息）*/
+export const asso_detail = (customerCode) => {
+    return http.requestQuickGet(apiUrl + '/associateCompany/detail', customerCode);
 };
 
 /*——————————————————————物料————————————————————————*/
@@ -76,6 +91,16 @@ export const page_GoodsDict = (page, size, params) => {
     //请求服务端的页面查询接口
     return http.requestQuickGet(apiUrl + '/goodsDict/page/' + page + '/' + size + '?' + queryString);
 };
+
+/*物料管理（新增）*/
+export const goodsDict_save = (params) => {
+    debugger
+    //将params对象数据拼装成key/value串
+    let queryString = querystring.stringify(params);
+    //请求服务端的页面查询接口
+    return http.requestPost(apiUrl + '/goodsDict/save', params);
+};
+
 /*物料管理（更新）*/
 export const goodsDict_update = (params) => {
     //将params对象数据拼装成key/value串
@@ -83,6 +108,24 @@ export const goodsDict_update = (params) => {
     //请求服务端的页面查询接口
     return http.requestPost(apiUrl + '/goodsDict/update', params);
 };
+
+/*物料管理 （删除）*/
+export const Materiel_delete = (params) => {
+    //将params对象数据拼装成key/value串
+    let queryString = querystring.stringify(params);
+    //请求服务端的页面查询接口
+    return http.requestPost(apiUrl + '/goodsDict/delete', params);
+};
+
+/*物料管理 （根据barCode查询）*/
+export const Materiel_one = (params) => {
+    //将params对象数据拼装成key/value串
+    let queryString = querystring.stringify(params);
+    //请求服务端的页面查询接口
+    return http.requestPost(apiUrl + '/goodsDivision/one', params);
+};
+
+
 /*物料管理更新（下拉框数据列表信息）*/
 export const goodsDivision_list = () => {
 
@@ -94,13 +137,11 @@ export const page_NeedOrder = (page, size, params) => {
     //将params对象数据拼装成key/value串
     let queryString = querystring.stringify(params);
     //请求服务端的页面查询接口
-    debugger
     return http.requestQuickGet(apiUrl + '/needOrder/page/' + page + '/' + size + '?' + queryString);
 };
 
 /* 要货单管理 （本地信息）*/
 export const getNeedOrderByNeedNo = (params) => {
-    debugger
     let queryString = querystring.stringify(params);
     //请求服务端的页面查询接口
     return http.requestPost(apiUrl + '/needOrder/getNeedOrderByNeedNo/',params);
@@ -117,7 +158,6 @@ export const page_MOPNeedOrder = (page, size, params) => {
 
 /* 下载要货单（MOPNeedOrder） (下载信息)*/
 export const downloadMOPNeedOrder = (params) => {
-    debugger
     //将params对象数据拼装成key/value串
     let queryString = querystring.stringify(params);
     //请求服务端的页面查询接口
@@ -146,7 +186,6 @@ export const getMOPNeedOrderByNeedNo = (params) => {
 
 /* 订货单管理 （分页）*/
 export const page_Indent = (page, size, params) => {
-    debugger
     //将params对象数据拼装成key/value串
     let queryString = querystring.stringify(params);
     //请求服务端的页面查询接口
@@ -166,7 +205,6 @@ export const page_Indent = (page, size, params) => {
 
 /* MOP订货单管理 （分页）*/
 export const page_MOPIndent = (page, size, params) => {
-    debugger
     //将params对象数据拼装成key/value串
     let queryString = querystring.stringify(params);
     //请求服务端的页面查询接口
@@ -175,7 +213,6 @@ export const page_MOPIndent = (page, size, params) => {
 
 /* 下载订货单（MOPIndent） (下载信息详情)*/
 export const downloadMOPIndent = (params) => {
-    debugger
     //将params对象数据拼装成key/value串
     let queryString = querystring.stringify(params);
     //请求服务端的页面查询接口
@@ -184,7 +221,6 @@ export const downloadMOPIndent = (params) => {
 
 /* 下载订货单（保存）*/
 export const MOPIndent_Save = (params) => {
-    debugger
     //将params对象数据拼装成key/value串
     let queryString = querystring.stringify(params);
     //请求服务端的页面查询接口
@@ -210,7 +246,6 @@ export const getMOPIndentByDocNum = (params) => {
 
 /* MOP子项单据单管理 （分页）*/
 export const page_MOPIndentDt = (page, size, params) => {
-    debugger
     //将params对象数据拼装成key/value串
     let queryString = querystring.stringify(params);
     //请求服务端的页面查询接口
