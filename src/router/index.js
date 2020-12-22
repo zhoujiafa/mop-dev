@@ -40,6 +40,11 @@ export default new Router({
                     meta: { title: '要货单下载信息' }
                 },
                 {
+                    path: '/ReceiptOrder',
+                    component: () => import(/* webpackChunkName: "SmsProvider" */ '../components/page/sms/ReceiptOrder.vue'),
+                    meta: { title: '门店收货' }
+                },
+                {
                     path: '/Indent',
                     component: () => import(/* webpackChunkName: "SmsMchConfig" */ '../components/page/sms/Indent.vue'),
                     meta: { title: '订货单信息' }
@@ -63,6 +68,11 @@ export default new Router({
                     path: '/SmsSendRecord',
                     component: () => import(/* webpackChunkName: "SmsSendRecord" */ '../components/page/sms/SmsSendRecord.vue'),
                     meta: { title: '短信发送记录' }
+                },
+                {
+                    path: '/searchOrder',
+                    component: () => import(/* webpackChunkName: "SmsSendRecord" */ '../components/page/newRetail/searchOrder.vue'),
+                    meta: { title: '订货单查询' }
                 },
                 // {
                 //     path: '/tabs',

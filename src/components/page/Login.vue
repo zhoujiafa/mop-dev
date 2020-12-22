@@ -129,7 +129,7 @@
                         debugger
                         API.user_Login(user).then(res => {
                             debugger
-                            if (res.body.userName == null || res.body.telePhone == null) {
+                            if (res.body.body.userName == null || res.body.body.telePhone == null) {
                                 this.$message.error('用户名或密码错误，请重新登录');
                             }else{
                                 this.$message.success('登录成功');

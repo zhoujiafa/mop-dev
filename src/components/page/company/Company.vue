@@ -160,7 +160,7 @@
                 <div style="position: relative;left:48%;top:-194px;width:300px">
                     <el-form-item label="代理商名称:" prop="customerName">
                         <el-select v-model="saveModel.customerCode" filterable placeholder="请选择代理商"
-                                   @change="changeSaveAsso(saveModel.customerCode)">
+                                   @change="changeSaveAsso(saveModel)">
                             <el-option
                                     v-for="item in assList"
                                     :key="item.customerCode"
@@ -342,7 +342,7 @@
                     if (valid) {
                         debugger;
                         console.log(this.saveModel);
-                        API.list_CompanyDict(this.saveModel).then(res => {
+                        API.checkExistCompany(this.saveModel).then(res => {
                             debugger;
                             if (res.body.length > 0) {
                                 this.$message.error('该门店已存在，请勿重复录入');
@@ -531,8 +531,12 @@
                     this.reload();
                 });
             },
-            changeSaveAsso(customerCode) {
+            changeSaveAsso(saveModel) {
                 debugger;
+                this.saveModel.companyCode = saveModel.companyCode;
+                this.saveModel.companyName = saveModel.companyName;
+                this.saveModel.mopDeptCode = saveModel.mopDeptCode;
+                this.saveModel.mopDeptName = saveModel.mopDeptName;
                 this.saveModel = this.assList.find((item) => {
                     this.saveModel.customerName = item.customerCode;
                     this.saveModel.customerCode = item.customerCode;

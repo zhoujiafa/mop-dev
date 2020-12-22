@@ -410,9 +410,10 @@
                 this.$refs[formName].resetFields();
             },
             getSelectCompanyListData: function() {
+                debugger
                 console.log(this.companyAO);
                 API.list_CompanyDict(this.companyAO).then(res => {
-
+                    debugger
                     this.companyList = res.body;
                 });
             },

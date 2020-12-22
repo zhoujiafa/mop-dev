@@ -77,6 +77,10 @@ export default {
                     title: '订单管理',
                     subs: [
                         {
+                            index: 'ReceiptOrder',
+                            title: '门店收货'
+                        },
+                        {
                             index: 'NeedOrder',
                             title: '本地要货单'
                         },
@@ -106,6 +110,16 @@ export default {
                             title: '短信发送记录'
                         }*/
                     ]
+                },
+                {
+                    icon: 'el-icon-lx-cascades',
+                    /*index: 'newRetail',*/
+                    title: '新零售管理',
+                    subs: [
+                        {
+                            index: 'searchOrder',
+                            title: '发货单查询'
+                        }]
                 },
                 // {
                 //     icon: 'el-icon-lx-emoji',
