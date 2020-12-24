@@ -12,7 +12,7 @@
     </div>
 </template>
 <script>
-    import * as API from '../../../api/index';
+    // import * as API from '../../../api/index';
     export default {
         inject: ['reload'],
         data() {
