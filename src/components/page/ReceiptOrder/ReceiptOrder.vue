@@ -19,7 +19,6 @@
             return {
                 query: {
                     orderNo: '',
-                    companyName: '',
                     companyCode: ''
                 },
                 getRowKeys(row) {
