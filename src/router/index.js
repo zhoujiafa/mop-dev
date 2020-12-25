@@ -41,7 +41,7 @@ export default new Router({
                 },
                 {
                     path: '/ReceiptOrder',
-                    component: () => import(/* webpackChunkName: "SmsProvider" */ '../components/page/sms/ReceiptOrder.vue'),
+                    component: () => import(/* webpackChunkName: "SmsProvider" */ '../components/page/ReceiptOrder/ReceiptOrder.vue'),
                     meta: { title: '门店收货' }
                 },
                 {

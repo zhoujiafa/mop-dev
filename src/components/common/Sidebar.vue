@@ -1,5 +1,5 @@
 <template>
-    <div class="sidebar">
+    <div class="sidebar" id="app">
         <el-menu
             class="sidebar-el-menu"
             :default-active="onRoutes"
@@ -10,7 +10,7 @@
             unique-opened
             router
         >
-            <template v-for="item in items">
+            <template  v-for="item in items">
                 <template v-if="item.subs">
                     <el-submenu :index="item.index" :key="item.index">
                         <template slot="title">
@@ -53,9 +53,17 @@
 import bus from '../common/bus';
 export default {
     data() {
+        role:0;
         return {
             collapse: false,
-            items: [
+            items:[
+                {
+                    icon: 'el-icon-lx-cascades',
+                    index: 'ReceiptOrder',
+                    title: '门店收货'
+                }
+            ],
+            items2: [
                 {
                     icon: 'el-icon-lx-home',
                     index: 'dashboard',
@@ -77,10 +85,6 @@ export default {
                     title: '订单管理',
                     subs: [
                         {
-                            index: 'ReceiptOrder',
-                            title: '门店收货'
-                        },
-                        {
                             index: 'NeedOrder',
                             title: '本地要货单'
                         },
@@ -95,7 +99,10 @@ export default {
                         {
                             index: 'MOPIndent',
                             title: 'MOP订货单'
-                        }/*,
+                        }
+
+
+                        /*,
                         {
                             index: 'SmsMchConfig',
                             title: '商户短信配置'
@@ -109,6 +116,8 @@ export default {
                             index: 'SmsSendRecord',
                             title: '短信发送记录'
                         }*/
+
+
                     ]
                 },
                 {
@@ -121,6 +130,8 @@ export default {
                             title: '发货单查询'
                         }]
                 },
+
+
                 // {
                 //     icon: 'el-icon-lx-emoji',
                 //     index: 'icon',
@@ -162,6 +173,15 @@ export default {
         });
     }
 };
+
+window.onload=function(){
+    debugger
+    let t = this;
+    if(this.localStorage.ms_username === '周子佳'){
+
+    }
+
+}
 </script>
 
 <style scoped>

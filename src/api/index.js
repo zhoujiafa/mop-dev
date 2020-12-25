@@ -282,6 +282,16 @@ export const page_MOPIndentDt = (page, size, params) => {
 };
 
 
+/*—————————————————————MOP根据订单号和门店编号一键收货——————————————————————————*/
+
+/* MOP子项单据单管理 （分页）*/
+export const getDeliverGoodsList = (params) => {
+    //将params对象数据拼装成key/value串
+    let queryString = querystring.stringify(params);
+    //请求服务端的页面查询接口
+    return http.requestPost(apiUrl + '/deliverGoods/DeliverGoodsList/' ,params);
+};
+
 
 
 
