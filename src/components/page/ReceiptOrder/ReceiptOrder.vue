@@ -7,7 +7,7 @@
             <el-input v-model="query.orderNo" clearable placeholder="订单号" style="width: 200px"></el-input>
         </div>
         <div class="commit">
-            <el-button type="success" icon="el-icon-thumb">一键收货</el-button>
+            <el-button type="success" icon="el-icon-thumb" @click="getDeliverGoodsList">一键收货</el-button>
         </div>
     </div>
 </template>
@@ -20,13 +20,27 @@
                 query: {
                     orderNo: '',
                     companyCode: ''
-                },
-                getRowKeys(row) {
-                    return row.docNum;
                 }
             };
         },
         methods: {
+            getDeliverGoodsList:function() {
+                debugger;
+                console.log(this.query);
+                API.getDeliverGoodsList(this.query).then(res => {
+                    if(res.resultInt === -1){
+                        this.$message({
+                            type: 'warning',
+                            message: res.resultString
+                        });
+                    }else{
+                        this.$message({
+                            type: 'success',
+                            message: res.resultString
+                        });
+                    }
+                });
+            }
 
         }
     };
