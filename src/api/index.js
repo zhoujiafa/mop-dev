@@ -12,13 +12,13 @@ export const fetchData = (query) => {
 
 //服务器调用地址
 //const apiUrl = 'http://14.17.96.21:8087';
-//const apiUrl = 'https://gzshuangzhi.com';
+const apiUrl = 'https://gzshuangzhi.com';
 
 
 /*本地服务器*/
 //const apiUrl = 'http://localhost:8087';
 /*本地服务器*/
-const apiUrl = 'http://192.168.0.202:8087';
+//const apiUrl = 'http://192.168.0.202:8087';
 
 
 /*—————————————————————注册———————————————————-———*/
